@@ -70,6 +70,20 @@ const Task = (props) => {
                             </Card.Body>
                         </Card>
                     </Col>
+                    <Col lg={12}>
+                        <Card className="cardDesign">
+
+                            <Card.Body>
+                                <Card.Title>Show Analysis</Card.Title>
+                                <Card.Text>
+                                   Check analysis of selling.
+                                </Card.Text>
+                                <div className="text-center">
+                                    <Link className="btn btn-primary btn-md w-50 mt-2" name="server" to="/showAnalysis" >Analysis</Link>
+                                </div>
+                            </Card.Body>
+                        </Card>
+                    </Col>
                 </Row>
             </Container>
         </React.Fragment>

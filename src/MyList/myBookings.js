@@ -8,6 +8,7 @@ import AcceptDeclineModal from '../admin/acceptDeclineModal'
 
 const MyBookings = (props) => {
     const {} = props;
+    let user = JSON.parse(localStorage.getItem('user'));
     let [bookings,setBookings] = useState([]);
     
     let [auth,setAuth] = useState({
@@ -110,6 +111,13 @@ const MyBookings = (props) => {
     return (
         <React.Fragment>
             <h5 className="text-center"> My Bookings </h5>
+            {
+                user.dots > 0&&
+                (
+                    <p className="text-center" style={{color:"red"}}> You have {user.dots} dots received in your account. Increase in dots can be harmful to you. </p>
+                )
+            }
+            
             {
                 bookings.length > 0?
                 (

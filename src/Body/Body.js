@@ -17,6 +17,7 @@ import ShowGiveaway from '../admin/ShowGiveaway';
 import Book from "../MyList/book";
 import MyBookings from "../MyList/myBookings";
 import Delivery from "../admin/Delivery";
+import Charts from '../chart/chart'
 
 class Body extends Component {
   render() {
@@ -37,6 +38,7 @@ class Body extends Component {
           <Route path='/addgiveaway' component={AddGiveaway}/>
           <Route path='/showgiveaway' component={ShowGiveaway}/>
           <Route path="/deliveryItems" component={Delivery} exact></Route>
+          <Route path = "/showAnalysis" component={Charts} exact></Route> 
          
 
 
