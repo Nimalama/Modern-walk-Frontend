@@ -784,11 +784,12 @@ td
 
 .item__wrapper
 {
-  background:rgb(4, 113, 214);
+  background:white;
   border-radius: 6px;
-  box-shadow: inset 0px 0px 5px rgba(187,157,251,0.5);
+  box-shadow: inset 0px 0px 5px rgba(187,157,251,0.5), 2px 2px 5px rgba(0,0,0,0.6);
   padding:10px;
   margin:10px;
+
 }
 .userImg
 {
@@ -817,5 +818,6 @@ td
 {
   border-left: 8px solid green; 
   width:100%;
+  color:black !important;
   box-shadow: 6px 6px 24px rgba(0,0,0,0.6);
 }
