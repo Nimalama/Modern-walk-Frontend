@@ -16,6 +16,7 @@ import AddGiveaway from '../admin/AddGiveaway';
 import ShowGiveaway from '../admin/ShowGiveaway';
 import Book from "../MyList/book";
 import MyBookings from "../MyList/myBookings";
+import Delivery from "../admin/Delivery";
 
 class Body extends Component {
   render() {
@@ -35,6 +36,7 @@ class Body extends Component {
           <Route path='/booking' component={MyBookings} exact/>
           <Route path='/addgiveaway' component={AddGiveaway}/>
           <Route path='/showgiveaway' component={ShowGiveaway}/>
+          <Route path="/deliveryItems" component={Delivery} exact></Route>
          
 
 

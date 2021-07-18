@@ -56,6 +56,20 @@ const Task = (props) => {
                             </Card.Body>
                         </Card>
                     </Col>
+                    <Col lg={12}>
+                        <Card className="cardDesign">
+
+                            <Card.Body>
+                                <Card.Title>Delivery Work</Card.Title>
+                                <Card.Text>
+                                   Check the delivery items and deliver it to the appropriate user.
+                                </Card.Text>
+                                <div className="text-center">
+                                    <Link className="btn btn-primary btn-md w-50 mt-2" name="server" to="/deliveryItems" >Deliver</Link>
+                                </div>
+                            </Card.Body>
+                        </Card>
+                    </Col>
                 </Row>
             </Container>
         </React.Fragment>
