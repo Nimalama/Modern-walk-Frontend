@@ -13,7 +13,7 @@ const digitizer = (n)=>{
 }
 
 const getFormattedToday = (date)=>{
-    return `${date.getFullYear()}-${digitizer(date.getMonth())}-${digitizer(date.getDate())}`
+    return `${date.getFullYear()}-${digitizer(date.getMonth()+1)}-${digitizer(date.getDate())}`
 }
 
 let today = new Date();
@@ -113,15 +113,15 @@ const Charts = (props) => {
                         label: "Satisfactions",
                         fill: true,
                         lineTension: 0.1,
-                        borderColor: "white",
-                        backgroundColor:"rgba(255,255,255,0.2)",
+                        borderColor: "black",
+                        backgroundColor:"skyblue",
                         borderCapStyle: 'butt',
                         borderDash: [10,5],
                         borderDashOffset: 1.0,
                         borderWidth:0.5,
                         borderJoinStyle: 'miter',
-                        pointBorderColor: "white",
-                        pointBackgroundColor: "white",
+                        pointBorderColor: "black",
+                        pointBackgroundColor: "black",
                         pointBorderWidth: 0,
                         pointHoverRadius: 2,
                         pointHoverBackgroundColor: "blue",
@@ -185,15 +185,15 @@ const Charts = (props) => {
                         label: "Quantity",
                         fill: true,
                         lineTension: 0.1,
-                        borderColor: "white",
-                        backgroundColor:"rgba(255,255,255,0.2)",
+                        borderColor: "black",
+                        backgroundColor:"skyblue",
                         borderCapStyle: 'butt',
                         borderDash: [10,5],
                         borderDashOffset: 1.0,
                         borderWidth:0.5,
                         borderJoinStyle: 'miter',
-                        pointBorderColor: "white",
-                        pointBackgroundColor: "white",
+                        pointBorderColor: "black",
+                        pointBackgroundColor: "black",
                         pointBorderWidth: 0,
                         pointHoverRadius: 2,
                         pointHoverBackgroundColor: "blue",
@@ -202,7 +202,7 @@ const Charts = (props) => {
                         pointRadius: 3,
                         pointHitRadius: 3,
                         // notice the gap in the data and the spanGaps: false
-                        data:Object.values(dailyData['quantityBox']),
+                        data:Object.values(dailyData['quantityBox']).map((val)=>{return val[0]}),
                         spanGaps: false
 
                     }
@@ -213,35 +213,29 @@ const Charts = (props) => {
                 type:"bar",
                 data:data,
                 options:{
-                    title:{
-                      display:true,
-                      text:'Day Sales',
-                      fontSize:25
-                    },
-                    legend:{
-                      display:true,
-                      position:'right',
-                      labels:{
-                        fontColor:'white'
-                      }
-                    },
-                    layout:{
-                      padding:{
-                        left:50,
-                        right:0,
-                        bottom:0,
-                        top:0
-                      }
-                    },
-                    tooltips:{
-                      enabled:true
-                    },
+                   
+                    plugins: {
+                        legend: {
+                          display: false
+                        }
+                      },
                     scales:{
+                        x: {
+                            display: true
+                        },
                         y: {
-                            beginAtZero: true
-                          }
-                    }
-                  }
+                            display: true
+                        }
+                    },
+                    layout: {
+                        padding: {
+                          left: 0,
+                          right: 0,
+                          top: 0,
+                          bottom: 0,
+                        },
+                      }
+                }
             })
         }
     },[JSON.stringify(dailyData)])
@@ -257,15 +251,15 @@ const Charts = (props) => {
                         label: "Price",
                         fill: true,
                         lineTension: 0.1,
-                        borderColor: "white",
-                        backgroundColor:"rgba(255,255,255,0.2)",
+                        borderColor: "black",
+                        backgroundColor:"skyblue",
                         borderCapStyle: 'butt',
                         borderDash: [10,5],
                         borderDashOffset: 1.0,
                         borderWidth:0.5,
                         borderJoinStyle: 'miter',
-                        pointBorderColor: "white",
-                        pointBackgroundColor: "white",
+                        pointBorderColor: "black",
+                        pointBackgroundColor: "black",
                         pointBorderWidth: 0,
                         pointHoverRadius: 2,
                         pointHoverBackgroundColor: "blue",
@@ -274,7 +268,7 @@ const Charts = (props) => {
                         pointRadius: 3,
                         pointHitRadius: 3,
                         // notice the gap in the data and the spanGaps: false
-                        data:Object.values(dailyData['priceBox']),
+                        data:Object.values(dailyData['priceBox']).map((val)=>{return val[1]}),
                         spanGaps: false
 
                     }
@@ -329,15 +323,15 @@ const Charts = (props) => {
                         label: "Business Point",
                         fill: true,
                         lineTension: 0.1,
-                        borderColor: "white",
-                        backgroundColor:"rgba(255,255,255,0.2)",
+                        borderColor: "black",
+                        backgroundColor:"skyblue",
                         borderCapStyle: 'butt',
                         borderDash: [10,5],
                         borderDashOffset: 1.0,
                         borderWidth:0.5,
                         borderJoinStyle: 'miter',
-                        pointBorderColor: "white",
-                        pointBackgroundColor: "white",
+                        pointBorderColor: "black",
+                        pointBackgroundColor: "black",
                         pointBorderWidth: 0,
                         pointHoverRadius: 2,
                         pointHoverBackgroundColor: "blue",
@@ -559,7 +553,7 @@ const Charts = (props) => {
                                         </div>
                                     </Col>
                                     <Col lg={5}>
-                                        <div className="adminDetails ml-3 mt-5" style={{color:"white"}}>
+                                        <div className="adminDetails ml-3 mt-5" style={{color:"black"}}>
                                                 <p className="mb-1"> <strong>Full name: </strong> {user.fname} {user.lname} </p>
                                                 <p className="mb-1"> <strong>Email: </strong> {user.Email} </p>
                                                 <p className="mb-1"> <strong>Username: </strong> {user.Username} </p>
@@ -578,117 +572,125 @@ const Charts = (props) => {
                                             </Col>       
                                             <Col lg={4} className="d-none d-md-none d-lg-block"></Col>
                                             <Col lg={12}>
-                                                <p className="text-center text-white mb-2" style={{fontWeight:"bolder"}}>  {fancyDate} </p>
+                                                <p className="text-center mb-2" style={{fontWeight:"bolder"}}>  {fancyDate} </p>
                                             </Col>
                                         </Row>
                                     </Col>        
-
-
+                                    {
+                                            overallAnalysis&&
+                                            (
+                                                
                                     <Container className="mb-2 mt-4">
-                                          <Row>
-                                               <Col lg={3}>
-                                                    <Card className="analysisCard">
-                                                        
-                                                        <Card.Body>
-                                                            <Card.Title>Total Quantity Sold</Card.Title>
-                                                            {
-                                                                overallAnalysis['itemsSold']?
-                                                                (
-                                                                    <Card.Text style={{fontWeight:"bolder",fontSize:"22px"}}>
-                                                                        {overallAnalysis['itemsSold']}
-                                                                    </Card.Text>
-                                                                ):
-                                                                (
-                                                                    <Card.Text style={{fontWeight:"bolder",fontSize:"22px"}}>
-                                                                        0
-                                                                    </Card.Text>
-                                                                )   
-                                                            }
-                                                          
-                                                            
-                                                        </Card.Body>
-                                                    </Card>
-                                               </Col> 
-                                               <Col lg={3}>
-                                                    <Card className="analysisCard">
-                                                        
-                                                        <Card.Body>
-                                                            <Card.Title>Total Price Collected</Card.Title>
-                                                            
-                                                            {
-                                                                overallAnalysis['priceCollected']?
-                                                                (
-                                                                    <Card.Text style={{fontWeight:"bolder",fontSize:"22px"}}>
-                                                                       Rs {overallAnalysis['priceCollected']}
-                                                                    </Card.Text>
-                                                                ):
-                                                                (
-                                                                    <Card.Text style={{fontWeight:"bolder",fontSize:"22px"}}>
-                                                                       Rs 0
-                                                                    </Card.Text>
-                                                                )   
-                                                            }
-                                                            
-                                                        </Card.Body>
-                                                    </Card>
-                                               </Col> 
-                                               <Col lg={3}>
-                                                    <Card className="analysisCard">
-                                                        
-                                                        <Card.Body>
-                                                            <Card.Title>Commision</Card.Title>
-                                                            
-                                                            {
-                                                                overallAnalysis['commision']?
-                                                                (
-                                                                    <Card.Text style={{fontWeight:"bolder",fontSize:"22px"}}>
-                                                                        Rs {overallAnalysis['commision']}
-                                                                    </Card.Text>
-                                                                ):
-                                                                (
-                                                                    <Card.Text style={{fontWeight:"bolder",fontSize:"22px"}}>
-                                                                        Rs 0
-                                                                    </Card.Text>
-                                                                )   
-                                                            }
-                                                        </Card.Body>
-                                                    </Card>
-                                               </Col> 
-                                               <Col lg={3}>
-                                                    <Card className="analysisCard">
-                                                        
-                                                        <Card.Body>
-                                                            <Card.Title>Business View</Card.Title>
-                                                          
-                                                            {
-                                                                overallAnalysis['businessPoint']?
-                                                                (
-                                                                    <Card.Text style={{fontWeight:"bolder",fontSize:"22px"}}>
-                                                                        {overallAnalysis['businessPoint']}
-                                                                    </Card.Text>
-                                                                ):
-                                                                (
-                                                                    <Card.Text style={{fontWeight:"bolder",fontSize:"22px"}}>
-                                                                        0
-                                                                    </Card.Text>
-                                                                )   
-                                                            }
-                                                        </Card.Body>
-                                                    </Card>
-                                               </Col> 
-                                          </Row>
-                                          </Container>  
+                                    <Row>
+                                         <Col lg={3}>
+                                             
+                                              <Card className="analysisCard">
+                                                  
+                                                  <Card.Body>
+                                                      <Card.Title>Total Quantity Sold</Card.Title>
+                                                      {
+                                                          overallAnalysis['quantity']?
+                                                          (
+                                                              <Card.Text style={{fontWeight:"bolder",fontSize:"22px"}}>
+                                                                  {overallAnalysis['quantity']}
+                                                              </Card.Text>
+                                                          ):
+                                                          (
+                                                              <Card.Text style={{fontWeight:"bolder",fontSize:"22px"}}>
+                                                                  0
+                                                              </Card.Text>
+                                                          )   
+                                                      }
+                                                    
+                                                      
+                                                  </Card.Body>
+                                              </Card>
+                                         </Col> 
+                                         <Col lg={3}>
+                                              <Card className="analysisCard">
+                                                  
+                                                  <Card.Body>
+                                                      <Card.Title>Total Price Collected</Card.Title>
+                                                      
+                                                      {
+                                                          overallAnalysis['priceCollected']?
+                                                          (
+                                                              <Card.Text style={{fontWeight:"bolder",fontSize:"22px"}}>
+                                                                 Rs {overallAnalysis['priceCollected']}
+                                                              </Card.Text>
+                                                          ):
+                                                          (
+                                                              <Card.Text style={{fontWeight:"bolder",fontSize:"22px"}}>
+                                                                 Rs 0
+                                                              </Card.Text>
+                                                          )   
+                                                      }
+                                                      
+                                                  </Card.Body>
+                                              </Card>
+                                         </Col> 
+                                         <Col lg={3}>
+                                              <Card className="analysisCard">
+                                                  
+                                                  <Card.Body>
+                                                      <Card.Title>Commision</Card.Title>
+                                                      
+                                                      {
+                                                          overallAnalysis['commision']?
+                                                          (
+                                                              <Card.Text style={{fontWeight:"bolder",fontSize:"22px"}}>
+                                                                  Rs {overallAnalysis['commision']}
+                                                              </Card.Text>
+                                                          ):
+                                                          (
+                                                              <Card.Text style={{fontWeight:"bolder",fontSize:"22px"}}>
+                                                                  Rs 0
+                                                              </Card.Text>
+                                                          )   
+                                                      }
+                                                  </Card.Body>
+                                              </Card>
+                                         </Col> 
+                                         <Col lg={3}>
+                                              <Card className="analysisCard">
+                                                  
+                                                  <Card.Body>
+                                                      <Card.Title>Commision View</Card.Title>
+                                                    
+                                                      {
+                                                          overallAnalysis['businessPoint']?
+                                                          (
+                                                              <Card.Text style={{fontWeight:"bolder",fontSize:"22px"}}>
+                                                                  {overallAnalysis['businessPoint']}%
+                                                              </Card.Text>
+                                                          ):
+                                                          (
+                                                              <Card.Text style={{fontWeight:"bolder",fontSize:"22px"}}>
+                                                                  0%
+                                                              </Card.Text>
+                                                          )   
+                                                      }
+                                                  </Card.Body>
+                                              </Card>
+                                         </Col> 
+                                    </Row>
+                                    </Container> 
+                                                           
+                                             )
+                                    }
+
+                                        <p className="text-center" style={{fontWeight:"bolder",color:"black",marginLeft:"10px"}}> Yesterday's chart </p>
 
                                           <Container className="mt-2 mb-2">
                                             <Row>
                                                 <Col lg={7}>
-                                                    <p className="text-white text-center" style={{fontWeight:"bolder",fontSize:"21px"}}> Top Sellings (According to Quantity) </p>
+                                                    <p className="text-center" style={{fontWeight:"bolder",fontSize:"21px"}}> Top Sellings (According to Quantity) </p>
                                                     <div>
                                                         <canvas id="quantitySelling"></canvas>
                                                     </div>
                                                 </Col>
                                                 <Col lg={5}>
-                                                    <p className="text-white text-center" style={{fontWeight:"bolder"}}> Top 10 Sellings </p>
+                                                    <p className="text-center" style={{fontWeight:"bolder"}}> Top 10 Sellings </p>
                                                     {
                                                         displaySellings()
                                                     }
@@ -699,13 +701,13 @@ const Charts = (props) => {
                                          <Container className="mt-2 mb-2">
                                             <Row>
                                                 <Col lg={7}>
-                                                    <p className="text-white text-center" style={{fontWeight:"bolder",fontSize:"21px"}}> Top Sellings (According to Price) </p>
+                                                    <p className=" text-center" style={{fontWeight:"bolder",fontSize:"21px"}}> Top Sellings (According to Price) </p>
                                                     <div>
                                                         <canvas id="priceSelling"></canvas>
                                                     </div>
                                                 </Col>
                                                 <Col lg={5}>
-                                                    <p className="text-white text-center" style={{fontWeight:"bolder"}}> Top 10 Sellings </p>
+                                                    <p className=" text-center" style={{fontWeight:"bolder"}}> Top 10 Sellings </p>
                                                     {
                                                         displaySellingsPrice()
                                                     }
@@ -716,7 +718,7 @@ const Charts = (props) => {
                                           <Container className="mt-2 mb-2">
                                             <Row>
                                                 <Col lg={12}>
-                                                    <p className="text-white text-center" style={{fontWeight:"bolder",fontSize:"21px"}}> Business Point Chart </p>
+                                                    <p className=" text-center" style={{fontWeight:"bolder",fontSize:"21px"}}> Commision View Chart </p>
                                                    
                                                         <div>
                                                             <canvas id="businessPoint"></canvas>
@@ -731,13 +733,13 @@ const Charts = (props) => {
                                         <Container className="mt-2 mb-2">
                                             <Row>
                                                 <Col lg={8}>
-                                                    <p className="text-white text-center" style={{fontWeight:"bolder",fontSize:"21px"}}> Overall User Satisfactions(Not According to date) </p>
+                                                    <p className=" text-center" style={{fontWeight:"bolder",fontSize:"21px"}}> Overall User Satisfactions(Not According to date) </p>
                                                     <div>
                                                         <canvas id="satisfaction"></canvas>
                                                     </div>
                                                 </Col>
                                                 <Col lg={4}>
-                                                    <p className="text-white text-center" style={{fontWeight:"bolder"}}> Top 10 Satisfactions </p>
+                                                    <p className=" text-center" style={{fontWeight:"bolder"}}> Top 10 Satisfactions </p>
                                                     {
                                                         displayTable()
                                                     }

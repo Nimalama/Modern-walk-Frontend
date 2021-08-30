@@ -89,6 +89,19 @@ const MyBookings = (props) => {
                 )
         }
 
+        else if(data.deliveryStatus == "Cancelled")
+        {
+            return(
+                <>
+                
+                <p style={{background:"pink",color:"black","fontWeight":"bolder",borderRadius:"6px",clear:"both","textAlign":"center",margin:"10px"}}> 
+                    Cancelled
+               
+                </p>
+                </>
+                )
+        }
+
         else if(data.deliveryStatus == "Delivered" && data.userStatement == "Not Provided")
         {
             return (
@@ -128,6 +141,7 @@ const MyBookings = (props) => {
                                     return (
                                         <Col lg={4}>
                                                 <Card className="CardProductsss" style={{ cursor: "pointer" }}>
+                                                    
                                                 <div className="productImage">
                                                     <Card.Img variant="top" src={`http://localhost:90/${product.booking_id.product_id.pimage}`} />
                                                 </div>
