@@ -1,0 +1,74 @@
+.quizContainer
+{
+    width:100%;
+    padding:12px;
+    margin: 10px 0px;
+    box-shadow: 2px 4px 20px rgba(0,0,0,0.6);
+    border-radius: 8px;
+}
+.btnQuiz
+{
+    box-shadow:2px 4px 6px rgba(0,0,0,0.6);
+    float:right;
+    width:110px;
+    background:#4b1cac;
+    border:none;
+    margin:10px;
+    color:white !important;
+}
+
+.btnQuizz
+{
+    box-shadow:2px 4px 6px rgba(0,0,0,0.6);
+    background:#4b1cac;
+    border:none;
+    margin:10px;
+    color:white !important;
+}
+
+input:focus,select:focus,textarea
+{
+    box-shadow:none !important;
+    border : 1px solid black !important;
+}
+
+label
+{
+    font-weight:bolder;
+}
+
+.btnQuiz:hover,.btnQuizz:hover
+{
+    background: white !important;
+    color:#4b1cac !important;
+    border:1px solid #4b1cac !important;
+}
+
+.btnQuiz:focus,.btnQuizz:focus
+{
+    box-shadow:none !important;
+}
+
+input,textarea
+{
+    color:black !important;
+}
+
+.tableDesign th
+{
+  background:#566879 !important;
+  color:white !important;
+  font-size: 16px;
+  
+}
+
+.tableDesign th, .tableDesign td
+{
+  white-space: nowrap !important;
+}
+
+.tableDesign td
+{
+  background:#fff !important;
+  color:black !important;
+}
