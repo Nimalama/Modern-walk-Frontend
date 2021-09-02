@@ -1,6 +1,9 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState} from 'react'
+import axios from 'axios';
+import {useToasts} from 'react-toast-notifications'
 
 const useQuiz = () => {
+    const {addToast} = useToasts();
     //state goes here
     let [quizDetail,setQuizDetail] = useState({
         "paragraph":"",
@@ -13,11 +16,8 @@ const useQuiz = () => {
         "chance":1,
         "errors":{}
     })
-    let [step,setStep] = useState(1);
  
-    let questions = [];
-    let answers = [];
-    let realAnswer = [];
+
 
 
     const quizChangeHandler = (e)=>{
@@ -28,14 +28,40 @@ const useQuiz = () => {
         })
     }
 
-    const stepHandler = (num)=>{
-        setStep(
-            num
-        )
+
+    
+    const addQuiz = (e)=>{
+        e.preventDefault();
+        axios.post(process.env.REACT_APP_URL+"addQuiz",quizDetail)
+        .then((response)=>{
+            if(response.data.success == true) 
+            {
+                addToast(response.data.message,{
+                    "appearance":"success",
+                    "autoDismiss":true
+                })
+                window.location.reload();
+            }
+            else
+            {
+                addToast(response.data.message,{
+                    "appearance":"error",
+                    "autoDismiss":true
+                })
+                setQuizDetail({
+                    ...quizDetail,
+                    ['errors']:response.data.error
+                })
+            }
+        })
+        .catch((err)=>{
+            console.log(err) ;       
+        })
     }
 
 
-    return {questions,answers,realAnswer,quizDetail,quizChangeHandler,step,stepHandler};
+
+    return {quizDetail,quizChangeHandler,addQuiz,setQuizDetail};
 }
 
 export default useQuiz

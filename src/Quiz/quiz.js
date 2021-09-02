@@ -2,14 +2,34 @@ import React,{useState} from 'react'
 import {Container,Row,Col,Table} from 'react-bootstrap'
 import './quiz.css'
 import useQuiz from './useQuiz'
-import ParagraphQuiz from './stepComponent/paragraphQuiz'
-import QuestionsQuiz from './stepComponent/questionsQuiz'
 import {AiFillDelete} from 'react-icons/ai'
 
+let answers = [];
+let realAnswer = [];
+let questions = [];
+
+const digitizer = (num)=>{
+    let n = num;
+    if(n < 10)
+    {
+        n= "0"+n;
+    }
+    return n;
+}
+
+const getFormattedToday = (date)=>{
+    return `${date.getFullYear()}-${digitizer(date.getMonth()+1)}-${digitizer(date.getDate())}`
+}
+
+
+let current = new Date();
+let minDate = getFormattedToday(current);
+current.setDate(current.getDate()+15);
+let maxDate = getFormattedToday(current);
 
 const Quiz = (props) => {
     const {} = props;
-    const {questions,quizChangeHandler,quizDetail,answers,realAnswer} = useQuiz();
+    const {quizChangeHandler,quizDetail,addQuiz,setQuizDetail} = useQuiz();
 
     //state goes here
     let [question,setQuestion] = useState("");
@@ -26,28 +46,46 @@ const Quiz = (props) => {
    //handlers
     const addQuestion = (e)=>{
         e.preventDefault();
-        setQuestionBox([...questionBox,question])
+        questionBox.push(question)
         questions.push(question)
+        setQuizDetail({
+            ...quizDetail,
+            ['questions']:questions
+        })
         setQuestion("");
     }
 
     const addAnswer = (e)=>{
         e.preventDefault();
-        setAnswerBox([...answerBox,answer]);
+        answerBox.push(answer)
+        setAnswerBox(answerBox);
         answers.push(answer.split("---"));
+        setQuizDetail({
+            ...quizDetail,
+            ['answers']:answers
+        })
         setAnswer("");
     }
 
     const addCorrectAnswer = (e)=>{
         e.preventDefault();
-        setCorrectAnswerBox([...correctAnswerBox,correctAnswer]);
+        correctAnswerBox.push(correctAnswer)
         realAnswer.push(correctAnswer.split("---"));
+        setQuizDetail({
+            ...quizDetail,
+            ['realAnswer']:realAnswer
+        })
         setCorrectAnswer("");
     }
   
     const removeQuestion = (index)=>{
         questionBox.splice(index,1);
-        setIteration(
+        questions.splice(index,1);
+        setQuizDetail({
+            ...quizDetail,
+            ['questions']:questions
+        })
+        setQuestionBox(
             questionBox
         )
         setIteration(iteration-1)
@@ -55,7 +93,12 @@ const Quiz = (props) => {
 
     const removeAnswer = (index)=>{
         answerBox.splice(index,1);
-        setIteration(
+        answers.splice(index,1);
+        setQuizDetail({
+            ...quizDetail,
+            ['answers']:answers
+        })
+        setAnswerBox(
             answerBox
         )
         setIteration(iteration-1)
@@ -63,7 +106,12 @@ const Quiz = (props) => {
 
     const removeCorrectAnswer = (index)=>{
         correctAnswerBox.splice(index,1);
-        setIteration(
+        realAnswer.splice(index,1);
+        setQuizDetail({
+            ...quizDetail,
+            ['realAnswer']:realAnswer
+        })
+        setCorrectAnswerBox(
             correctAnswerBox
         )
         setIteration(iteration-1)
@@ -252,6 +300,45 @@ const Quiz = (props) => {
                                                         </Table>
                                                 )
                                             }
+                                        </Col>
+                                        <Col lg={2} className="d-none d-md-none d-lg-block"></Col>
+                                    </>
+                                ):
+                                step == 5?
+                                (
+                                    <>
+                                    <Col lg={2} className="d-none d-md-none d-lg-block"></Col>
+                                        <Col lg={8}>
+                                            <form method = "post" onSubmit={addQuiz}>
+                                                <div className="form-group">
+                                                    <label> Quiz Date </label>  
+                                                    <input type="date" className="form-control" max={maxDate} min={minDate} name="startAt" value={quizDetail.startAt} onChange={(e)=>{quizChangeHandler(e)}}></input>
+                                                    {quizDetail['errors']['startAt']&& (<p> <small style={{color:"red"}}>  {quizDetail['errors']['startAt']}  </small> </p>)}
+                                                </div>
+
+                                                <div className="form-group">
+                                                    <label> Starting Time </label>
+                                                    <input type="time" className="form-control" name="startTime" value={quizDetail.startTime} onChange={(e)=>{quizChangeHandler(e)}}></input>
+                                                    {quizDetail['errors']['startTime']&& (<p> <small style={{color:"red"}}>  {quizDetail['errors']['startTime']}  </small> </p>)}
+                                                </div>
+
+                                                <div className="form-group">
+                                                    <label> Ending Time </label>
+                                                    <input type="time" className="form-control" name="endTime" value={quizDetail.endTime} onChange={(e)=>{quizChangeHandler(e)}}></input>
+                                                    {quizDetail['errors']['endTime']&& (<p> <small style={{color:"red"}}>  {quizDetail['errors']['endTime']}  </small> </p>)}
+                                                </div>
+
+                                                <div className="form-group">
+                                                    <label> Chances Per Question </label>
+                                                    <input type="number" min="1" className="form-control" name="chance" value={quizDetail.chance} onChange={(e)=>{quizChangeHandler(e)}}></input>
+                                                    {quizDetail['errors']['chance']&& (<p> <small style={{color:"red"}}>  {quizDetail['errors']['chance']}  </small> </p>)}
+                                                </div>
+                                                {quizDetail['errors']['random']&& (<p className="text-center"> <small style={{color:"red"}}>  {quizDetail['errors']['random']}  </small> </p>)}
+                                                <div className="text-center">
+                                                    <button className="btn btn-0 btn-md btnQuizz" type="submit" name="answer"> Add Quiz </button> 
+                                                </div>
+                                            </form>
+                               
                                         </Col>
                                         <Col lg={2} className="d-none d-md-none d-lg-block"></Col>
                                     </>

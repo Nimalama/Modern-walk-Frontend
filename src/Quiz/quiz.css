@@ -72,3 +72,7 @@ input,textarea
   background:#fff !important;
   color:black !important;
 }
+
+:disabled{
+    cursor:not-allowed;
+}

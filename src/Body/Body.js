@@ -20,6 +20,9 @@ import Delivery from "../admin/Delivery";
 import Charts from '../chart/chart'
 import ResetPassword from "./ResetPassword";
 import Quiz from "../Quiz/quiz";
+import QuizTime from "../Quiz/quizTime";
+import SingleQuiz from "../Quiz/singleQuiz";
+import PlayQuiz from "../Quiz/playQuiz";
 
 class Body extends Component {
   render() {
@@ -43,6 +46,9 @@ class Body extends Component {
           <Route path = "/showAnalysis" component={Charts} exact></Route> 
           <Route path = "/resetPassword/:token" component={ResetPassword} exact/>
           <Route path ="/quizAddition" component={Quiz} exact/>
+          <Route path="/quizTime" component={QuizTime} exact/>
+          <Route path="/quiz/:quizId" component={SingleQuiz} exact/>
+          <Route path="/quizPlay/:quizId" component={PlayQuiz} exact/>
         </Switch>
 
       </>
