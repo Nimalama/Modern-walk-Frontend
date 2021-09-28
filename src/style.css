@@ -481,7 +481,8 @@ input.input100 {
   box-shadow: 0px 0px 15px rgba(0,0,0,0.6);
   padding:10px;
   margin:10px;
-  box-shadow: inset 0px 0px 18px pink;
+  box-shadow:  2px 2px 6px grey;
+  border-radius: 20px 0px 20px 0px;
 }
 .productImage{
     height: 300px !important;

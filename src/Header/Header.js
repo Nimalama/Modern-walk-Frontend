@@ -34,13 +34,17 @@ class Header extends Component {
                             <NavLink className="nav-link" activeClassName="active" to="/"> Home </NavLink>
                             <NavLink className="nav-link" activeClassName="active" to="/Product"> Product </NavLink>
                             <NavLink className="nav-link" activeClassName="active" to="/AboutUs"> About Us</NavLink>
-                            <NavLink className="nav-link" activeClassName="active" to="/booking"> Booking</NavLink>
+                        
+                            <NavLink className="nav-link" activeClassName="active" to="/showgiveaway"> Show Giveaway</NavLink>
 
                             <NavLink className="nav-link" activeClassName="active" to="/Contact"> Contact Us</NavLink>
                             {
                                 token ?
                                     (
+                                        <>
                                         <NavLink className="nav-link" activeClassName="active" to="/mylist"> My Book</NavLink>
+                                        <NavLink className="nav-link" activeClassName="active" to="/booking"> Booking</NavLink>~
+                                        </>
                                     ) :
                                     (
                                         <></>
