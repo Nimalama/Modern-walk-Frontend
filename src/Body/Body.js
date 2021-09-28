@@ -3,7 +3,7 @@ import { Component } from "react";
 import Register from './Register';
 import Login from './Login';
 
-import { Route } from 'react-router-dom';
+import { Switch,Route } from 'react-router-dom';
 import AddProduct from "../admin/AddProduct";
 import Home from './Home';
 import Aboutus from '../AboutUs/AboutUs';
@@ -18,12 +18,17 @@ import Book from "../MyList/book";
 import MyBookings from "../MyList/myBookings";
 import Delivery from "../admin/Delivery";
 import Charts from '../chart/chart'
+import ResetPassword from "./ResetPassword";
+import Quiz from "../Quiz/quiz";
+import QuizTime from "../Quiz/quizTime";
+import SingleQuiz from "../Quiz/singleQuiz";
+import PlayQuiz from "../Quiz/playQuiz";
 
 class Body extends Component {
   render() {
     return (
       <>
-  
+        <Switch>
           <Route path='/register' component={Register} />
           <Route path='/login' component={Login} />
           <Route exact path='/' component={Home} />
@@ -39,8 +44,12 @@ class Body extends Component {
           <Route path='/showgiveaway' component={ShowGiveaway}/>
           <Route path="/deliveryItems" component={Delivery} exact></Route>
           <Route path = "/showAnalysis" component={Charts} exact></Route> 
-         
-
+          <Route path = "/resetPassword/:token" component={ResetPassword} exact/>
+          <Route path ="/quizAddition" component={Quiz} exact/>
+          <Route path="/quizTime" component={QuizTime} exact/>
+          <Route path="/quiz/:quizId" component={SingleQuiz} exact/>
+          <Route path="/quizPlay/:quizId" component={PlayQuiz} exact/>
+        </Switch>
 
       </>
 
