@@ -23,6 +23,9 @@ import Quiz from "../Quiz/quiz";
 import QuizTime from "../Quiz/quizTime";
 import SingleQuiz from "../Quiz/singleQuiz";
 import PlayQuiz from "../Quiz/playQuiz";
+import AddFood from '../hotelMenu/addFood'
+import Menu from "../hotelMenu/menu";
+import Orders from "../hotelMenu/orders";
 
 class Body extends Component {
   render() {
@@ -49,6 +52,10 @@ class Body extends Component {
           <Route path="/quizTime" component={QuizTime} exact/>
           <Route path="/quiz/:quizId" component={SingleQuiz} exact/>
           <Route path="/quizPlay/:quizId" component={PlayQuiz} exact/>
+          <Route path ='/addFood' component={AddFood} exact/>
+          <Route path="/menu" component={Menu} exact/> 
+          <Route path = "/myOrders" component = {Orders} exact/>
+          {/* future update path="/menu/:hotelId" */}
         </Switch>
 
       </>

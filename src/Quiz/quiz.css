@@ -26,7 +26,7 @@
     color:white !important;
 }
 
-input:focus,select:focus,textarea
+input:focus,select:focus,textarea:focus
 {
     box-shadow:none !important;
     border : 1px solid black !important;
