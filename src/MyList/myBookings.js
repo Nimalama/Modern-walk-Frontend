@@ -42,7 +42,7 @@ const MyBookings = (props) => {
             return (
                 <>
                   
-                    <p style={{background:"pink",color:"black","fontWeight":"bolder",borderRadius:"6px",clear:"both","textAlign":"center",margin:"10px"}}> Replacement Pending <FaHourglassEnd/>  </p>
+                    <p style={{background:"grey",color:"black","fontWeight":"bolder",borderRadius:"6px",clear:"both","textAlign":"center",margin:"10px"}}> Replacement Pending <FaHourglassEnd/>  </p>
                 </>
             )
         } 
@@ -51,7 +51,7 @@ const MyBookings = (props) => {
             return (
                 <>
                   
-                    <p style={{background:"pink",color:"black","fontWeight":"bolder",borderRadius:"6px",clear:"both","textAlign":"center",margin:"10px"}}> Can Delete Booking Before 24 hrs <AiFillDelete/> </p>
+                    <p style={{background:"grey",color:"black","fontWeight":"bolder",borderRadius:"6px",clear:"both","textAlign":"center",margin:"10px"}}> Can Delete Booking Before 24 hrs <AiFillDelete/> </p>
                 </>
             )
         }
@@ -60,7 +60,7 @@ const MyBookings = (props) => {
             return(
             <>
             
-            <p style={{background:"pink",color:"black","fontWeight":"bolder",borderRadius:"6px",clear:"both","textAlign":"center",margin:"10px"}}> 
+            <p style={{background:"grey",color:"black","fontWeight":"bolder",borderRadius:"6px",clear:"both","textAlign":"center",margin:"10px"}}> 
             Item is on a way
             {
                 data.userStatement == "Replacement Needed"?
@@ -81,7 +81,7 @@ const MyBookings = (props) => {
             return(
                 <>
                 
-                <p style={{background:"pink",color:"black","fontWeight":"bolder",borderRadius:"6px",clear:"both","textAlign":"center",margin:"10px"}}> 
+                <p style={{background:"grey",color:"black","fontWeight":"bolder",borderRadius:"6px",clear:"both","textAlign":"center",margin:"10px"}}> 
                     Thank you for shopping <FaSmileBeam/>
                
                 </p>
@@ -94,7 +94,7 @@ const MyBookings = (props) => {
             return(
                 <>
                 
-                <p style={{background:"pink",color:"black","fontWeight":"bolder",borderRadius:"6px",clear:"both","textAlign":"center",margin:"10px"}}> 
+                <p style={{background:"grey",color:"black","fontWeight":"bolder",borderRadius:"6px",clear:"both","textAlign":"center",margin:"10px"}}> 
                     Cancelled
                
                 </p>

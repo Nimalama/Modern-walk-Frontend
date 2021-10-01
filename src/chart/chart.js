@@ -2,6 +2,11 @@ import React,{useState,useEffect} from 'react'
 import axios from 'axios'
 import {Container,Row,Col,Card} from 'react-bootstrap'
 import Chart from 'chart.js/auto';
+let dayChart
+let dayChart1
+
+let dayChart3
+let dayChart4
 
 const digitizer = (n)=>{
     let num = n;
@@ -72,6 +77,7 @@ const Charts = (props) => {
             }
             else
             {
+               
                 setAnalysis({})
                 setChart({});
                 setMinDate(mainDate);
@@ -85,6 +91,7 @@ const Charts = (props) => {
     useEffect(()=>{
         axios.get(process.env.REACT_APP_URL+"dailyAnalysis/"+date,auth.config)
         .then((response)=>{
+            console.log(response)
             if(response.data.success == true)
             {
                 setFancyDate(response.data.date);
@@ -93,7 +100,7 @@ const Charts = (props) => {
             else
             {
                 setFancyDate("")
-                setDailyData({})
+                setDailyData(response.data.data)
             }
         })
         .catch((err)=>{
@@ -101,10 +108,17 @@ const Charts = (props) => {
         })
     },[date])
 
+    console.log(dailyData)
+
     //charts
     useEffect(()=>{
-        if(Object.keys(userSatisfactions).length > 0)
+       
+        if(userSatisfactions  && Object.keys(userSatisfactions).length > 0)
         {
+            setTimeout(()=>{
+
+
+            },1000)
             let chartArea = document.querySelector('#satisfaction').getContext('2d');
             const data = {
                 labels:Object.keys(userSatisfactions),
@@ -137,250 +151,441 @@ const Charts = (props) => {
                 ]
             }
 
-            const dayChart = new Chart(chartArea,{
-                type:"line",
-                data:data,
-                options:{
-                    title:{
-                      display:true,
-                      text:'Day Sales',
-                      fontSize:25
-                    },
-                    legend:{
-                      display:true,
-                      position:'right',
-                      labels:{
-                        fontColor:'white'
-                      }
-                    },
-                    layout:{
-                      padding:{
-                        left:50,
-                        right:0,
-                        bottom:0,
-                        top:0
-                      }
-                    },
-                    tooltips:{
-                      enabled:true
-                    },
-                    scales:{
-                        y: {
-                            beginAtZero: true
+            try{
+                dayChart4 = new Chart(chartArea,{
+                    type:"line",
+                    data:data,
+                    options:{
+                        title:{
+                          display:true,
+                          text:'Day Sales',
+                          fontSize:25
+                        },
+                        legend:{
+                          display:true,
+                          position:'right',
+                          labels:{
+                            fontColor:'white'
                           }
-                    }
-                  }
-            })
+                        },
+                        layout:{
+                          padding:{
+                            left:50,
+                            right:0,
+                            bottom:0,
+                            top:0
+                          }
+                        },
+                        tooltips:{
+                          enabled:true
+                        },
+                        scales:{
+                            y: {
+                                beginAtZero: true
+                              }
+                        }
+                      }
+                })
+
+            }
+            catch(err)
+            {
+                try{
+                    dayChart4.destroy();
+                    dayChart4 = new Chart(chartArea,{
+                        type:"line",
+                        data:data,
+                        options:{
+                            title:{
+                              display:true,
+                              text:'Day Sales',
+                              fontSize:25
+                            },
+                            legend:{
+                              display:true,
+                              position:'right',
+                              labels:{
+                                fontColor:'white'
+                              }
+                            },
+                            layout:{
+                              padding:{
+                                left:50,
+                                right:0,
+                                bottom:0,
+                                top:0
+                              }
+                            },
+                            tooltips:{
+                              enabled:true
+                            },
+                            scales:{
+                                y: {
+                                    beginAtZero: true
+                                  }
+                            }
+                          }
+                    })
+
+                }
+                catch(err2){}
+            }
+
+            
         }
     },[JSON.stringify(userSatisfactions)])
 
     useEffect(()=>{
-        if(Object.keys(dailyData).length > 0)
+       
+        if(dailyData && Object.keys(dailyData).length > 0)
         {
-            let chartArea = document.querySelector('#quantitySelling').getContext('2d');
-            const data = {
-                labels:Object.keys(dailyData['quantityBox']),
-                datasets:[
-                    {
-                        label: "Quantity",
-                        fill: true,
-                        lineTension: 0.1,
-                        borderColor: "black",
-                        backgroundColor:"skyblue",
-                        borderCapStyle: 'butt',
-                        borderDash: [10,5],
-                        borderDashOffset: 1.0,
-                        borderWidth:0.5,
-                        borderJoinStyle: 'miter',
-                        pointBorderColor: "black",
-                        pointBackgroundColor: "black",
-                        pointBorderWidth: 0,
-                        pointHoverRadius: 2,
-                        pointHoverBackgroundColor: "blue",
-                        pointHoverBorderColor: "yellow",
-                        pointHoverBorderWidth: 2,
-                        pointRadius: 3,
-                        pointHitRadius: 3,
-                        // notice the gap in the data and the spanGaps: false
-                        data:Object.values(dailyData['quantityBox']).map((val)=>{return val[0]}),
-                        spanGaps: false
-
-                    }
-                ]
-            }
-
-            const dayChart = new Chart(chartArea,{
-                type:"bar",
-                data:data,
-                options:{
-                   
-                    plugins: {
-                        legend: {
-                          display: false
+            setTimeout(()=>{
+                let chartArea = document.querySelector('#quantitySelling').getContext('2d');
+                const data = {
+                    labels:Object.keys(dailyData['quantityBox']),
+                    datasets:[
+                        {
+                            label: "Quantity",
+                            fill: true,
+                            lineTension: 0.1,
+                            borderColor: "black",
+                            backgroundColor:"skyblue",
+                            borderCapStyle: 'butt',
+                            borderDash: [10,5],
+                            borderDashOffset: 1.0,
+                            borderWidth:0.5,
+                            borderJoinStyle: 'miter',
+                            pointBorderColor: "black",
+                            pointBackgroundColor: "black",
+                            pointBorderWidth: 0,
+                            pointHoverRadius: 2,
+                            pointHoverBackgroundColor: "blue",
+                            pointHoverBorderColor: "yellow",
+                            pointHoverBorderWidth: 2,
+                            pointRadius: 3,
+                            pointHitRadius: 3,
+                            // notice the gap in the data and the spanGaps: false
+                            data:Object.values(dailyData['quantityBox']).map((val)=>{return val[0]}),
+                            spanGaps: false
+    
                         }
-                      },
-                    scales:{
-                        x: {
-                            display: true
-                        },
-                        y: {
-                            display: true
-                        }
-                    },
-                    layout: {
-                        padding: {
-                          left: 0,
-                          right: 0,
-                          top: 0,
-                          bottom: 0,
-                        },
-                      }
+                    ]
                 }
-            })
+    try{dayChart3 = new Chart(chartArea,{
+        type:"bar",
+        data:data,
+        options:{
+           
+            plugins: {
+                legend: {
+                  display: false
+                }
+              },
+            scales:{
+                x: {
+                    display: true
+                },
+                y: {
+                    display: true
+                }
+            },
+            layout: {
+                padding: {
+                  left: 0,
+                  right: 0,
+                  top: 0,
+                  bottom: 0,
+                },
+              }
         }
-    },[JSON.stringify(dailyData)])
+    })
+}
+    catch(err){
+        
+        try{
+            dayChart3.destroy();
+
+            dayChart3 = new Chart(chartArea,{
+           
+            type:"bar",
+            data:data,
+            options:{
+               
+                plugins: {
+                    legend: {
+                      display: false
+                    }
+                  },
+                scales:{
+                    x: {
+                        display: true
+                    },
+                    y: {
+                        display: true
+                    }
+                },
+                layout: {
+                    padding: {
+                      left: 0,
+                      right: 0,
+                      top: 0,
+                      bottom: 0,
+                    },
+                  }
+            }
+        })
+}
+        catch(err2){}
+    }
+   
+                
+            },1000)
+           
+        }
+       
+    },[JSON.stringify(dailyData),date])
 
     useEffect(()=>{
-        if(Object.keys(dailyData).length > 0)
+        if(dailyData  && Object.keys(dailyData).length > 0)
         {
-            let chartArea = document.querySelector('#priceSelling').getContext('2d');
-            const data = {
-                labels:Object.keys(dailyData['priceBox']),
-                datasets:[
-                    {
-                        label: "Price",
-                        fill: true,
-                        lineTension: 0.1,
-                        borderColor: "black",
-                        backgroundColor:"skyblue",
-                        borderCapStyle: 'butt',
-                        borderDash: [10,5],
-                        borderDashOffset: 1.0,
-                        borderWidth:0.5,
-                        borderJoinStyle: 'miter',
-                        pointBorderColor: "black",
-                        pointBackgroundColor: "black",
-                        pointBorderWidth: 0,
-                        pointHoverRadius: 2,
-                        pointHoverBackgroundColor: "blue",
-                        pointHoverBorderColor: "yellow",
-                        pointHoverBorderWidth: 2,
-                        pointRadius: 3,
-                        pointHitRadius: 3,
-                        // notice the gap in the data and the spanGaps: false
-                        data:Object.values(dailyData['priceBox']).map((val)=>{return val[1]}),
-                        spanGaps: false
+            setTimeout(()=>{
+                let chartArea = document.querySelector('#priceSelling').getContext('2d');
+                const data = {
+                    labels:Object.keys(dailyData['priceBox']),
+                    datasets:[
+                        {
+                            label: "Price",
+                            fill: true,
+                            lineTension: 0.1,
+                            borderColor: "black",
+                            backgroundColor:"skyblue",
+                            borderCapStyle: 'butt',
+                            borderDash: [10,5],
+                            borderDashOffset: 1.0,
+                            borderWidth:0.5,
+                            borderJoinStyle: 'miter',
+                            pointBorderColor: "black",
+                            pointBackgroundColor: "black",
+                            pointBorderWidth: 0,
+                            pointHoverRadius: 2,
+                            pointHoverBackgroundColor: "blue",
+                            pointHoverBorderColor: "yellow",
+                            pointHoverBorderWidth: 2,
+                            pointRadius: 3,
+                            pointHitRadius: 3,
+                            // notice the gap in the data and the spanGaps: false
+                            data:Object.values(dailyData['priceBox']).map((val)=>{return val[1]}),
+                            spanGaps: false
+    
 
-                    }
-                ]
-            }
-
-            const dayChart = new Chart(chartArea,{
-                type:"bar",
-                data:data,
-                options:{
-                    title:{
-                      display:true,
-                      text:'Day Sales',
-                      fontSize:25
-                    },
-                    legend:{
-                      display:true,
-                      position:'right',
-                      labels:{
-                        fontColor:'white'
-                      }
-                    },
-                    layout:{
-                      padding:{
-                        left:50,
-                        right:0,
-                        bottom:0,
-                        top:0
-                      }
-                    },
-                    tooltips:{
-                      enabled:true
-                    },
-                    scales:{
-                        y: {
-                            beginAtZero: true
+                        }
+                    ]
+                }
+                try
+                {
+                    dayChart1 = new Chart(chartArea,{
+                        type:"bar",
+                        data:data,
+                        options:{
+                            title:{
+                              display:true,
+                              text:'Day Sales',
+                              fontSize:25
+                            },
+                            legend:{
+                              display:true,
+                              position:'right',
+                              labels:{
+                                fontColor:'white'
+                              }
+                            },
+                            layout:{
+                              padding:{
+                                left:50,
+                                right:0,
+                                bottom:0,
+                                top:0
+                              }
+                            },
+                            tooltips:{
+                              enabled:true
+                            },
+                            scales:{
+                                y: {
+                                    beginAtZero: true
+                                  }
+                            }
                           }
+                    })
+                }
+                catch(err) {
+                    try{
+                        dayChart1.destroy();
+                        dayChart1 = new Chart(chartArea,{
+                            type:"bar",
+                            data:data,
+                            options:{
+                                title:{
+                                  display:true,
+                                  text:'Day Sales',
+                                  fontSize:25
+                                },
+                                legend:{
+                                  display:true,
+                                  position:'right',
+                                  labels:{
+                                    fontColor:'white'
+                                  }
+                                },
+                                layout:{
+                                  padding:{
+                                    left:50,
+                                    right:0,
+                                    bottom:0,
+                                    top:0
+                                  }
+                                },
+                                tooltips:{
+                                  enabled:true
+                                },
+                                scales:{
+                                    y: {
+                                        beginAtZero: true
+                                      }
+                                }
+                              }
+                        })
                     }
-                  }
-            })
+                    catch(err2){}
+                }
+                
+    
+                
+            },1000)
+           
         }
-    },[JSON.stringify(dailyData)])
+      
+    },[JSON.stringify(dailyData),date])
 
     useEffect(()=>{
-        if(Object.keys(chart).length > 0)
+        if(chart && Object.keys(chart).length > 0)
         {
-            let chartArea = document.querySelector('#businessPoint').getContext('2d');
-            const data = {
-                labels:Object.keys(chart),
-                datasets:[
-                    {
-                        label: "Business Point",
-                        fill: true,
-                        lineTension: 0.1,
-                        borderColor: "black",
-                        backgroundColor:"skyblue",
-                        borderCapStyle: 'butt',
-                        borderDash: [10,5],
-                        borderDashOffset: 1.0,
-                        borderWidth:0.5,
-                        borderJoinStyle: 'miter',
-                        pointBorderColor: "black",
-                        pointBackgroundColor: "black",
-                        pointBorderWidth: 0,
-                        pointHoverRadius: 2,
-                        pointHoverBackgroundColor: "blue",
-                        pointHoverBorderColor: "yellow",
-                        pointHoverBorderWidth: 2,
-                        pointRadius: 3,
-                        pointHitRadius: 3,
-                        // notice the gap in the data and the spanGaps: false
-                        data:Object.values(chart),
-                        spanGaps: false
-
-                    }
-                ]
-            }
-
-            const dayChart = new Chart(chartArea,{
-                type:"line",
-                data:data,
-                options:{
-                    title:{
-                      display:true,
-                      text:'Day Sales',
-                      fontSize:25
-                    },
-                    legend:{
-                      display:true,
-                      position:'right',
-                      labels:{
-                        fontColor:'white'
-                      }
-                    },
-                    layout:{
-                      padding:{
-                        left:50,
-                        right:0,
-                        bottom:0,
-                        top:0
-                      }
-                    },
-                    tooltips:{
-                      enabled:true
-                    },
-                    scales:{
-                        y: {
-                            beginAtZero: true
+            setTimeout(()=>{
+                let chartArea = document.querySelector('#businessPoint').getContext('2d');
+                const data = {
+                    labels:Object.keys(chart),
+                    datasets:[
+                        {
+                            label: "Business Point",
+                            fill: true,
+                            lineTension: 0.1,
+                            borderColor: "black",
+                            backgroundColor:"skyblue",
+                            borderCapStyle: 'butt',
+                            borderDash: [10,5],
+                            borderDashOffset: 1.0,
+                            borderWidth:0.5,
+                            borderJoinStyle: 'miter',
+                            pointBorderColor: "black",
+                            pointBackgroundColor: "black",
+                            pointBorderWidth: 0,
+                            pointHoverRadius: 2,
+                            pointHoverBackgroundColor: "blue",
+                            pointHoverBorderColor: "yellow",
+                            pointHoverBorderWidth: 2,
+                            pointRadius: 3,
+                            pointHitRadius: 3,
+                            // notice the gap in the data and the spanGaps: false
+                            data:Object.values(chart),
+                            spanGaps: false
+    
+                        }
+                    ]
+                }
+    
+                try
+                {
+                    dayChart = new Chart(chartArea,{
+                        type:"line",
+                        data:data,
+                        options:{
+                            title:{
+                              display:true,
+                              text:'Day Sales',
+                              fontSize:25
+                            },
+                            legend:{
+                              display:true,
+                              position:'right',
+                              labels:{
+                                fontColor:'white'
+                              }
+                            },
+                            layout:{
+                              padding:{
+                                left:50,
+                                right:0,
+                                bottom:0,
+                                top:0
+                              }
+                            },
+                            tooltips:{
+                              enabled:true
+                            },
+                            scales:{
+                                y: {
+                                    beginAtZero: true
+                                  }
+                            }
                           }
+                    })
+    
+                }
+                catch(err)
+                {
+                    try{
+                        dayChart.destroy();
+                        dayChart = new Chart(chartArea,{
+                            type:"line",
+                            data:data,
+                            options:{
+                                title:{
+                                  display:true,
+                                  text:'Day Sales',
+                                  fontSize:25
+                                },
+                                legend:{
+                                  display:true,
+                                  position:'right',
+                                  labels:{
+                                    fontColor:'white'
+                                  }
+                                },
+                                layout:{
+                                  padding:{
+                                    left:50,
+                                    right:0,
+                                    bottom:0,
+                                    top:0
+                                  }
+                                },
+                                tooltips:{
+                                  enabled:true
+                                },
+                                scales:{
+                                    y: {
+                                        beginAtZero: true
+                                      }
+                                }
+                              }
+                        })
+    
                     }
-                  }
-            })
+                    catch(err2){}
+                }
+             
+            },1000)
+             
         }
         
     },[JSON.stringify(chart)])
@@ -566,7 +771,7 @@ const Charts = (props) => {
                                             <Col lg={4}>
                                                 <form method = "post">
                                                     <div className="form-group">
-                                                        <input type="date" className="form-control" name="date" onChange={(e)=>{changeHandler(e)}} min={minDate} max={mainDate} value={date}/>
+                                                        <input type="date" className="form-control" name="date" onChange={(e)=>{changeHandler(e)}}  max={mainDate} value={date}/>
                                                     </div>
                                                 </form>
                                             </Col>       
@@ -679,15 +884,20 @@ const Charts = (props) => {
                                              )
                                     }
 
-                                        <p className="text-center" style={{fontWeight:"bolder",color:"black",marginLeft:"10px"}}> Yesterday's chart </p>
+                                        <p className="text-center" style={{fontWeight:"bolder",color:"black",marginLeft:"10px"}}> Chart </p>
 
                                           <Container className="mt-2 mb-2">
                                             <Row>
                                                 <Col lg={7}>
                                                     <p className="text-center" style={{fontWeight:"bolder",fontSize:"21px"}}> Top Sellings (According to Quantity) </p>
-                                                    <div>
-                                                        <canvas id="quantitySelling"></canvas>
-                                                    </div>
+                                                    
+                                                       
+                                                            <div>
+                                                            <canvas id="quantitySelling"></canvas>
+                                                        </div>
+                                                        
+                                                    
+                                                  
                                                 </Col>
                                                 <Col lg={5}>
                                                     <p className="text-center" style={{fontWeight:"bolder"}}> Top 10 Sellings </p>
