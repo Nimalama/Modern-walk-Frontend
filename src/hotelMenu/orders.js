@@ -4,11 +4,17 @@ import axios from 'axios';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import useCommon from '../common/useCommon';
+import StarRatings  from 'react-star-ratings';
+import {useToasts} from 'react-toast-notifications';
+import GenerateBill from './generateBill'
 
 let slogans = ["Eat away at hunger.","You can help beat hunger!","We're hungry for donations.","Get in the holiday mood; donate some food."]
 
 const Orders = (props) => {
     const {} = props;
+    const {getFormattedTime,getFancyDate} = useCommon();
+    const {addToast} = useToasts();
 
     //state goes here
     let [myOrders,setMyOrders] = useState([]);
@@ -74,12 +80,12 @@ const Orders = (props) => {
                                 )
                             }   
                         </Slider>
-                        <p className="mt-3"> <strong> Ordered AT: </strong> {i.orderFancyDate} </p> 
+                        <p className="mt-3"> <strong> Order Time: </strong> {getFormattedTime(i.orderedTime[0],i.orderedTime[1])} </p> 
                           <mark style={{fontWeight:"bolder",background:"#f0f0f0",fontSize:"18px"}}> {slogans[parseInt(Math.random()*slogans.length)]} </mark> 
                           
                         </Col>
                       <Col lg={6}>
-                      <div style={{marginTop:"60px"}}>
+                      <div style={{marginTop:"40px"}}>
                       <h1 style={{fontSize:"25px"}}>Hotel Name</h1>
                                 <Table className="table table-striped myTable">
                                     <thead>
@@ -98,11 +104,33 @@ const Orders = (props) => {
                                         </tr>
                                         <tr>
                                             <th>Price</th>
-                                            <td>{i.hotelFoodId.discountPercent > 0 ? <><span style={{textDecoration: "line-through" }}> Rs {i.hotelFoodId.price * i.quantity} </span> <span> Rs {i.hotelFoodId.price * i.quantity}</span> <span style={{color:'grey'}}> ({i.hotelFoodId.discountPercent}% off) </span>  </> : <> {i.hotelFoodId.price * i.quantity} </>  }</td>
+                                            <td>{i.hotelFoodId.discountPercent > 0 ? <><span style={{textDecoration: "line-through" }}> Rs {i.hotelFoodId.price * i.quantity} </span> <span> Rs {i.hotelFoodId.newPrice * i.quantity}</span> <span style={{color:'grey'}}> ({i.hotelFoodId.discountPercent}% off) </span>  </> : <> {i.hotelFoodId.price * i.quantity} </>  }</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Payment Status</th>
+                                            <td>{i.paymentStatus}</td>
                                         </tr>
                                        
                                     </thead>
                                 </Table>  
+
+                                {
+                                    i.foodStatus == "Served" && i.orderFancyDate == getFancyDate(new Date())&&
+                                    (
+                                        <div className="text-center">
+                                        <StarRatings
+                                            rating={i.foodRating / i.quantity}
+                                            starRatedColor="gold" 
+                                            starHoverColor='gold'             
+                                            numberOfStars={5}
+                                            starDimension="35px"
+                                            changeRating = {changeRating}
+                                            name={`rating-${i._id}`}
+                                            />
+                                        </div>
+                                    )
+                                }
+                                
                            
                         </div>
                        
@@ -140,6 +168,26 @@ const Orders = (props) => {
         return myOrders.filter((val)=>{return val.orderFancyDate == date}).length;
     }
 
+    const changeRating = (newRating,name)=>{
+        let orderId = name.split("-")[1];
+
+        axios.put(process.env.REACT_APP_URL+"rateTheFood",{'orderId':orderId,'rating':newRating},auth.config)
+        .then((response)=>{
+            if(response.data.success == true)
+            {
+                addToast(response.data.message,{"appearance":'success','autoDismiss':true});
+                window.location.reload();
+            }
+            else
+            {
+                addToast(response.data.message,{"appearance":'error','autoDismiss':true})
+            }
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+    }
+
     
     var settings = {
         dots: true,
@@ -161,10 +209,19 @@ const Orders = (props) => {
                             (
                                 unqDates.map((val)=>{
                                     return(
-                                        <Col lg={12} className="mt-2 mb-2">
+                                        <Col lg={12} className="mt-2 mb-5">
                                             <div>
-                                                <h6  style={{color:"black",fontWeight:"bolder",float:'right'}}> {filterCount(val)} orders </h6>
-                                                <h6  style={{color:"black",fontWeight:"bolder"}}> {val} </h6>
+                                                {
+                                                    getFancyDate(new Date()) == val &&
+                                                    (
+                                                        <>
+                                                          <button type="button" name="genBill" data-toggle="modal" data-target="#genBill" style={{background:"none",border:"none",color:"black",fontWeight:"bolder",float:'right',textDecoration:"underline",cursor:"pointer"}}> Generate Bill </button>
+                                                          <GenerateBill/>
+                                                        </>
+                                                    )
+                                                }
+                                               
+                                                <h6  style={{color:"black",fontWeight:"bolder"}}> {val} <small>[{filterCount(val)} orders]</small> </h6>
                                             </div>
                                             <Container>
                                             <Row>

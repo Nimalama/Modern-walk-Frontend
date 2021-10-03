@@ -24,6 +24,9 @@ const PlayQuiz = (props) => {
     let [myChance,setMyChance] = useState(0);
     let [accurate,setAccurate] = useState("");
     let [finish,setFinish] = useState(false);
+    let [randomQuestions,setRandomQuestions] = useState([]);
+    let [randomOptions,setRandomOptions] = useState([]);
+    let [randomAnswers,setRandomAnswers] = useState([]);
     let [auth,setAuth] = useState({
         "config":{
             "headers":{
@@ -33,30 +36,41 @@ const PlayQuiz = (props) => {
     })
 
     //effect goes here
-    useEffect(()=>{
-        axios.get(process.env.REACT_APP_URL+"fetchSingleQuiz/"+props.match.params.quizId,auth.config)
-        .then((response)=>{
+
+
+    useEffect(async ()=>{
+        try{
+            let response =  await axios.get(process.env.REACT_APP_URL+"fetchQuiz/"+props.match.params.quizId,auth.config);
             if(response.data.success == true)
             {
-                setQuiz(
-                    response.data.data
-                )
+                setQuiz(response.data.data);
                 setChance(
                     response.data.data.chance
-                )
+                );
                 setMyChance(
                     response.data.data.chance
-                )
-                seconds = response.data.quizTime;
+                );
+                setRandomAnswers(
+                    response.data.answers
+                );
+                setRandomOptions(
+                    response.data.options
+                );
+                setRandomQuestions(
+                    response.data.questions
+                );
+                seconds = response.data.quizTime
             }
             else
             {
                 setQuiz({});
             }
-        })
-        .catch((err)=>{
+        }
+        catch(err)
+        {
             console.log(err);
-        })
+        }
+        
     },[])
 
 
@@ -90,9 +104,9 @@ const PlayQuiz = (props) => {
 
     if(quiz)
     {
-        questions = quiz.questions&& quiz.questions.map((val)=>{return val});
-        answers = quiz.answers&& quiz.answers.map((val)=>{return val});
-        realAnswers = quiz.realAnswer&& quiz.realAnswer.map((val)=>{return val});
+        questions = randomQuestions.length > 0&& randomQuestions.map((val)=>{return val});
+        answers = randomOptions.length > 0&& randomOptions.map((val)=>{return val});
+        realAnswers = randomAnswers.length > 0 && randomAnswers.map((val)=>{return val});
     }
 
     const changeHandler = (e) => {

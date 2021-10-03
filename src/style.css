@@ -924,3 +924,7 @@ input[type="file"]:focus
   background: white !important;
   color:black;
 }
+input[type="checkbox"]
+{
+  background: green !important;
+}
