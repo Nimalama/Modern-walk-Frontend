@@ -1,7 +1,9 @@
-import { Component, state, changeHandler, submitLogin } from "react";
+import { Component, state, changeHandler, submitLogin,successResponse,failureResponse } from "react";
 import axios from 'axios';
 import '../style.css'
 import swal from 'sweetalert'
+import GoogleLogin from 'react-google-login';
+
 class Login extends Component {
 	state = {
 		Username: "",
@@ -51,6 +53,38 @@ class Login extends Component {
 
 			}
 			)
+	}
+
+	successResponse = (response)=>{
+		axios.post(process.env.REACT_APP_URL+"googleLogin",{'tokenId':response.tokenId})
+		.then((response)=>{
+		   if(response.data.success == true)
+		   {
+			  localStorage.setItem('user',JSON.stringify(response.data.data));
+			  localStorage.setItem('token',response.data.token);
+			  swal({
+			   'title':"Success",
+			   "text":response.data.message,
+			   "icon":"Success"
+		   })
+			  window.location.href="/";
+		   }
+		   else
+		   {
+			  swal({
+				  'title':"error",
+				  "text":response.data.message,
+				  "icon":"Error"
+			  })
+		   }
+		})
+		.catch((err)=>{
+			console.log(err);
+		})
+	}
+
+	failureResponse = (response)=>{
+		console.log(response)
 	}
 	render() {
 		return (
@@ -102,10 +136,20 @@ class Login extends Component {
 								<div className="text-center p-t-46 p-b-20">
 									<span className="txt2">
 										or sign up using
-						</span>
+									</span>
 								</div>
 
-								<div className="login100-form-social flex-c-m">
+								<div className="text-center mt-4">
+								<GoogleLogin
+										clientId="152506000566-5ai7d5st3ufv6amebke7fel88hug8ihf.apps.googleusercontent.com"
+										buttonText="Login with Google"
+										onSuccess={this.successResponse}
+										onFailure={this.failureResponse}
+										cookiePolicy={'single_host_origin'}
+									/>
+								</div>
+
+								{/* <div className="login100-form-social flex-c-m">
 									<a href="#" className="login100-form-social-item flex-c-m bg1 m-r-5">
 										<i className="fa fa-facebook-f" aria-hidden="true"></i>
 									</a>
@@ -113,7 +157,7 @@ class Login extends Component {
 									<a href="#" className="login100-form-social-item flex-c-m bg2 m-r-5">
 										<i className="fa fa-twitter" aria-hidden="true"></i>
 									</a>
-								</div>
+								</div> */}
 							</form>
 
 							<div className="login100-more" >
